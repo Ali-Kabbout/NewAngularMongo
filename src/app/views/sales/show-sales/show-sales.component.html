@@ -1,0 +1,145 @@
+<div style="padding-top: 25px;">
+    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-xl" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">{{ModalTitle}}</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="closeClick()">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <app-add-edit-sales [emp]="sale" *ngIf="ActivateAddEditEmpComp">
+                    </app-add-edit-sales>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <div style="padding:20px;">
+        <div class="row">
+            <div class="col-md-4">
+                <label>Store Location</label>
+                <input [(ngModel)]="txtStoreLocation" class="form-control" placeholder="Store Location">
+            </div>
+            <div class="col-md-4">
+                <label>Email</label>
+                <input [(ngModel)]="txtEmail" type="email" class="form-control" placeholder="Email">
+            </div>
+            <div class="col-md-4">
+                <label>Purchase Method</label>
+                <input [(ngModel)]="txtPurchaseMethod" class="form-control" placeholder="Purchase Method">
+            </div>
+        </div>
+        <div class="row" style="padding-top: 10px;padding-bottom: 10px;">
+            <div class="col-md-4">
+                <label>From Date</label>
+                <dx-date-box class="form-control" [(ngModel)]="txtFromDate" type="date"> </dx-date-box>
+            </div>
+
+            <div class="col-md-4">
+                <label>To Date</label>
+                <dx-date-box class="form-control" [(ngModel)]="txtToDate" type="date"> </dx-date-box>
+            </div>
+
+
+        </div>
+
+    </div>
+    <div class="row" style="padding-right: 10px;padding-left: 10px;">
+        <div class="col-md-12">
+            <!-- <button class="btn btn-lg btn-outline-primary" (click)="open(mymodal)">Open My Modal</button> -->
+            <dx-button (onClick)="open(mymodal)" style="float: left; " stylingMode="outlined" type="defualt" text="Add"
+                [width]="120">
+            </dx-button>
+
+            <dx-button (onClick)="reset()" style="float: right; " stylingMode="outlined" type="danger" text="Reset"
+                [width]="120">
+            </dx-button>
+            <dx-button (onClick)="search()" style="float: right;padding-left: 10px;" stylingMode="outlined"
+                text="Search" type="success" [width]="120">
+            </dx-button>
+
+        </div>
+    </div>
+    <div style="padding: 10px;">
+        <dx-data-grid id="gridContainer" [dataSource]="dataSource" [remoteOperations]="false"
+            [allowColumnReordering]="true" [rowAlternationEnabled]="true" [showBorders]="true">
+            <dxo-paging [pageSize]="10"></dxo-paging>
+            <dxo-pager [showPageSizeSelector]="true" [allowedPageSizes]="[10, 25, 50, 100]"></dxo-pager>
+            <dxi-column dataField="storeLocation" dataType="string"></dxi-column>
+            <dxi-column dataField="customer.email" dataType="string"></dxi-column>
+            <dxi-column dataField="saleDate" dataType="date"></dxi-column>
+            <dxi-column dataField="purchaseMethod" dataType="string" [width]="150"></dxi-column>
+ 
+        </dx-data-grid>
+
+    </div>
+</div>
+
+<ng-template #mymodal let-modal width=500>
+    <div class="modal-header">
+        <h4 class="modal-title" id="modal-basic-title">Bootstrap Modal</h4>
+        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+            <span aria-hidden="true">×</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <div class="row">
+            <div class="col-md-4">
+                <label>Customer Email</label>
+                <input [(ngModel)]="txtCustomerEmail" class="form-control" placeholder="Customer Email">
+            </div>
+            <div class="col-md-4">
+                <label>Customer age</label>
+                <input [(ngModel)]="txtAge" type="number" class="form-control" placeholder="Customer age">
+            </div>
+            <div class="col-md-4">
+                <label>Satisfaction</label>
+                <input [(ngModel)]="txtSatisfaction" class="form-control" placeholder="Satisfaction">
+            </div>
+        </div>
+        <div class="row" style="padding-top: 5px;">
+            <div class="col-md-4">
+                <label>Gender</label>
+                <select class="custom-select" [(ngModel)]="selected" (change)='onOptionsSelected($event)' placeholder="Gender"
+                    formControlName="cityName">
+                    <option value="" disabled>Choose your Gender</option>
+                    <option *ngFor="let city of Gender" [value]="city">{{city}}</option>
+                </select>
+
+            </div>
+            <div class="col-md-4">
+                <label>Coupon Used</label>
+                <select class="custom-select" [(ngModel)]="txtCouponUsed" (change)="changeCouponUsed($event)" placeholder="Coupon Used"
+                    formControlName="cityName">
+                    <option value="" disabled>Choose Coupon Used</option>
+                    <option *ngFor="let city of CouponUsed" [ngValue]="city">{{city}}</option>
+                </select>
+            </div>
+            <div class="col-md-4">
+                <label>Purchase Method</label>
+                <input [(ngModel)]="txtInputPurchaseMethod" class="form-control" placeholder="Purchase Method">
+
+            </div>
+        </div>
+        <div class="row" style="padding-top: 5px;">
+            <div class="col-md-4">
+                <label>Sale Date</label>
+                <dx-date-box class="form-control" [(ngModel)]="txtInputSaleDate" type="date"> </dx-date-box>
+            </div>
+            <div class="col-md-4">
+                <label>Store Location</label>
+                <input [(ngModel)]="txtInputStoreLocation" class="form-control" placeholder="Satisfaction">
+            </div>
+         </div>
+
+
+
+
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-outline-dark" (click)="modal.close('Save click')">Save</button>
+    </div>
+</ng-template>
